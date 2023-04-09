@@ -1,7 +1,5 @@
-const { db } = require("../data");
-
 exports.Category = {
-  products: (parent, { filter }, context, info) => {
+  products: (parent, { filter }, { db }, info) => {
     const categoryProducts = db.products.filter(
       (product) => product.categoryId === parent.id
     );

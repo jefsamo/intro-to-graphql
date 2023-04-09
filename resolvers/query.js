@@ -1,5 +1,3 @@
-const { db } = require("../data");
-
 exports.Query = {
   hello: () => {
     return ["Hello World!", "Graphql"];
@@ -11,7 +9,7 @@ exports.Query = {
     return 23.34;
   },
   isCool: () => false,
-  products: (parent, { filter }, context) => {
+  products: (parent, { filter }, { db }, info) => {
     let filteredProducts = db.products;
     if (filter) {
       const { onSale, avgRating } = filter;
@@ -35,14 +33,14 @@ exports.Query = {
     }
     return filteredProducts;
   },
-  product: (parent, args, context) => {
+  product: (parent, args, { db }) => {
     // console.log(context.products);
     return db.products.find((product) => product.id === args.id);
   },
-  categories: () => {
+  categories: (parent, args, { db }) => {
     return db.categories;
   },
-  category: (_, args, context) => {
+  category: (parent, args, { db }) => {
     return db.categories.find((category) => category.id === args.id);
   },
 };
